@@ -26,6 +26,10 @@ Opening `index.html` directly also works (`gifts-data.js` provides the catalog),
 
 This repo is ready to publish. The workflow in `.github/workflows/pages.yml` deploys the repository root as a static site.
 
+Live site: <https://stonepaw90.github.io/wedding-registry/>
+
+Pages must be enabled once with **Source: GitHub Actions**; until then the workflow's "Configure Pages" step fails with a 404 from `GET /repos/{owner}/{repo}/pages`.
+
 1. Create a **public** GitHub repository (GitHub Pages on private repos requires a paid plan).
 2. Push this folder to the `main` branch.
 3. In the repo: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
