@@ -22,16 +22,18 @@ relative to the GitHub Pages site. If you prefer absolute URLs, replace them wit
 Add your real cash funds to the **Funds** sheet. `funds.csv` contains headers only
 so the demo placeholder funds are not published by accident.
 
-## Updating product links on an existing sheet
+## Updating product links
 
-`gifts.csv` now contains real product pages instead of Google search links. If your
-sheet is already populated, do **not** re-import the CSV (that can disturb existing
-reservations). Instead:
+`gifts.csv` contains real product pages instead of Google search links.
 
-1. Open the spreadsheet → **Extensions → Apps Script**.
-2. Add a new file named `UpdateLinks`, paste `update-store-links.gs`, and save.
-3. Run the `updateStoreLinks` function once.
-4. Reload the live site; the **View** buttons will point at the retailers.
+If your sheet already has gift rows, re-import `gifts.csv` into the **Gifts** tab:
 
-The joint `Code.gs` deployment does not need to be redeployed for this.
+1. In Google Sheets: **File → Import → Upload**.
+2. Choose `google-sheets/gifts.csv`.
+3. Import location: **Replace current sheet**, then pick the **Gifts** tab.
+4. Import data.
+
+This replaces the gift rows, so only do it while the registry has no reservations
+you want to keep. It does not touch the **Funds** or **Reservations** tabs, and the
+Apps Script deployment does not need to be redeployed.
 
