@@ -1,0 +1,12 @@
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+
+# Local environment
+.env
+node_modules/
+
+# Local backups
+*.bak

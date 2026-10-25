@@ -1,0 +1,370 @@
+[
+  {
+    "slug": "le-creuset-signature-oval-dutch-oven-peche",
+    "brand": "Le Creuset",
+    "name": "6.75 Qt. Signature Oval Cast Iron Dutch Oven in Peche",
+    "price": "485.00",
+    "image": "images/registry/le-creuset-signature-oval-dutch-oven-peche.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 163848.png",
+      "box": [
+        106,
+        183,
+        342,
+        320
+      ]
+    }
+  },
+  {
+    "slug": "kitchenaid-hard-anodized-cookware-set",
+    "brand": "KitchenAid",
+    "name": "Hard Anodized Ceramic Nonstick Cookware Set",
+    "price": "",
+    "image": "images/registry/kitchenaid-hard-anodized-cookware-set.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 163848.png",
+      "box": [
+        557,
+        99,
+        851,
+        389
+      ]
+    }
+  },
+  {
+    "slug": "kitchenaid-artisan-stand-mixer-pistachio",
+    "brand": "KitchenAid",
+    "name": "Artisan Series 5 Qt. Tilt-Head Stand Mixer in Pistachio",
+    "price": "500.00",
+    "image": "images/registry/kitchenaid-artisan-stand-mixer-pistachio.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 163848.png",
+      "box": [
+        1042,
+        106,
+        1332,
+        392
+      ]
+    }
+  },
+  {
+    "slug": "ninja-airfryer",
+    "brand": "Ninja",
+    "name": "Airfryer",
+    "price": "120.00",
+    "image": "images/registry/ninja-airfryer.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 163848.png",
+      "box": [
+        1555,
+        94,
+        1779,
+        402
+      ]
+    }
+  },
+  {
+    "slug": "cuisinart-compact-4-slice-toaster",
+    "brand": "Cuisinart",
+    "name": "Compact 4-Slice Toaster",
+    "price": "70.00",
+    "image": "images/registry/cuisinart-compact-4-slice-toaster.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 163848.png",
+      "box": [
+        87,
+        966,
+        347,
+        1165
+      ]
+    }
+  },
+  {
+    "slug": "crock-pot-8-quart-slow-cooker",
+    "brand": "Crock-Pot",
+    "name": "8-Quart Programable Slow Cooker",
+    "price": "120.00",
+    "image": "images/registry/crock-pot-8-quart-slow-cooker.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 163848.png",
+      "box": [
+        556,
+        972,
+        835,
+        1161
+      ]
+    }
+  },
+  {
+    "slug": "nutribullet-pro-single-serve-blender",
+    "brand": "Nutribullet",
+    "name": "PRO Single Serve Blender in Matte Linen",
+    "price": "100.00",
+    "image": "images/registry/nutribullet-pro-single-serve-blender.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 163848.png",
+      "box": [
+        1053,
+        942,
+        1325,
+        1182
+      ]
+    }
+  },
+  {
+    "slug": "cuisinart-7-cup-food-processor",
+    "brand": "Cuisinart",
+    "name": "7-Cup Food Processor in White",
+    "price": "100.00",
+    "image": "images/registry/cuisinart-7-cup-food-processor.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 163848.png",
+      "box": [
+        1609,
+        933,
+        1734,
+        1176
+      ]
+    }
+  },
+  {
+    "slug": "villeroy-boch-like-champagne-glasses",
+    "brand": "Villeroy & Boch",
+    "name": "Like Champagne Glasses in Clay, Set of 2",
+    "price": "45.00",
+    "image": "images/registry/villeroy-boch-like-champagne-glasses.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 164238.png",
+      "box": [
+        68,
+        41,
+        433,
+        407
+      ]
+    }
+  },
+  {
+    "slug": "mikasa-bliss-bar-tool-set",
+    "brand": "Mikasa",
+    "name": "Bliss 8-Piece Bar Tool Set with Wooden Stand",
+    "price": "110.00",
+    "image": "images/registry/mikasa-bliss-bar-tool-set.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 164238.png",
+      "box": [
+        600,
+        124,
+        863,
+        319
+      ]
+    }
+  },
+  {
+    "slug": "crow-canyon-catalina-pitcher-pink-sunset",
+    "brand": "Crow Canyon Home",
+    "name": "Catalina Enamelware Large Pitcher in Pink Sunset",
+    "price": "67.00",
+    "image": "images/registry/crow-canyon-catalina-pitcher-pink-sunset.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 164238.png",
+      "box": [
+        1103,
+        116,
+        1328,
+        337
+      ]
+    }
+  },
+  {
+    "slug": "cuisinart-chefs-classic-bakeware-set",
+    "brand": "Cuisinart",
+    "name": "Chef's Classic 6-Piece Nonstick Bakeware Set in Champagne",
+    "price": "60.00",
+    "image": "images/registry/cuisinart-chefs-classic-bakeware-set.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 164238.png",
+      "box": [
+        1547,
+        147,
+        1843,
+        295
+      ]
+    }
+  },
+  {
+    "slug": "anchor-hocking-3-piece-measuring-cups",
+    "brand": "Anchor Hocking",
+    "name": "3-Piece Measuring Cup Set",
+    "price": "40.00",
+    "image": "images/registry/anchor-hocking-3-piece-measuring-cups.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 164238.png",
+      "box": [
+        97,
+        915,
+        405,
+        1164
+      ]
+    }
+  },
+  {
+    "slug": "joyjolt-alain-drinking-glasses",
+    "brand": "JoyJolt",
+    "name": "Alain 8-Piece Drinking Glasses Set",
+    "price": "33.00",
+    "image": "images/registry/joyjolt-alain-drinking-glasses.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 164238.png",
+      "box": [
+        598,
+        913,
+        876,
+        1166
+      ]
+    }
+  },
+  {
+    "slug": "escali-folding-thermometer",
+    "brand": "Escali",
+    "name": "Compact Folding Digital Thermometer in Black",
+    "price": "20.00",
+    "image": "images/registry/escali-folding-thermometer.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 164238.png",
+      "box": [
+        1090,
+        916,
+        1342,
+        1167
+      ]
+    }
+  },
+  {
+    "slug": "brooklyn-loom-cotton-sheet-set",
+    "brand": "Brooklyn Loom",
+    "name": "Classic Cotton 4-Piece Sheet Set in White, Queen",
+    "price": "50.00",
+    "image": "images/registry/brooklyn-loom-cotton-sheet-set.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 164238.png",
+      "box": [
+        1540,
+        902,
+        1849,
+        1178
+      ]
+    }
+  },
+  {
+    "slug": "joyjolt-14-piece-mixing-bowls",
+    "brand": "JoyJolt",
+    "name": "14-Piece Stainless Steel Mixing Bowls with Lids Set",
+    "price": "38.00",
+    "image": "images/registry/joyjolt-14-piece-mixing-bowls.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 164243.png",
+      "box": [
+        163,
+        77,
+        351,
+        358
+      ]
+    }
+  },
+  {
+    "slug": "all-clad-pro-release-cooling-rack",
+    "brand": "All-Clad",
+    "name": "Pro-Release Cooling and Baking Rack",
+    "price": "35.00",
+    "image": "images/registry/all-clad-pro-release-cooling-rack.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 164243.png",
+      "box": [
+        613,
+        142,
+        854,
+        295
+      ]
+    }
+  },
+  {
+    "slug": "bodum-melior-gooseneck-kettle",
+    "brand": "Bodum",
+    "name": "Melior Gooseneck Electric Water Kettle",
+    "price": "50.00",
+    "image": "images/registry/bodum-melior-gooseneck-kettle.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 164243.png",
+      "box": [
+        1069,
+        113,
+        1364,
+        332
+      ]
+    }
+  },
+  {
+    "slug": "oxo-3-piece-peeler-set",
+    "brand": "OXO",
+    "name": "3-Piece Peeler Set",
+    "price": "28.00",
+    "image": "images/registry/oxo-3-piece-peeler-set.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 164243.png",
+      "box": [
+        1603,
+        80,
+        1809,
+        333
+      ]
+    }
+  },
+  {
+    "slug": "joseph-joseph-multi-grate-grater",
+    "brand": "Joseph Joseph",
+    "name": "Multi-Grate & Store 3-in-1 Grater Set with Storage Container",
+    "price": "35.00",
+    "image": "images/registry/joseph-joseph-multi-grate-grater.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 164243.png",
+      "box": [
+        106,
+        930,
+        379,
+        1134
+      ]
+    }
+  },
+  {
+    "slug": "stone-lain-brasa-dinnerware-set",
+    "brand": "Stone + Lain",
+    "name": "Brasa 16-Piece Dinnerware Set in White, Service for 4",
+    "price": "80.00",
+    "image": "images/registry/stone-lain-brasa-dinnerware-set.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 164243.png",
+      "box": [
+        590,
+        966,
+        877,
+        1136
+      ]
+    }
+  },
+  {
+    "slug": "oxo-brew-coffee-grinder",
+    "brand": "OXO",
+    "name": "Brew Conical Burr Coffee Grinder in Black",
+    "price": "110.00",
+    "image": "images/registry/oxo-brew-coffee-grinder.png",
+    "source": {
+      "screenshot": "Screenshot 2026-10-25 164243.png",
+      "box": [
+        1162,
+        913,
+        1354,
+        1168
+      ]
+    }
+  }
+]

@@ -1,0 +1,151 @@
+:root {
+  --bg: #faf7f2;
+  --surface: #ffffff;
+  --text: #2b2620;
+  --muted: #6b6258;
+  --accent: #b08a5a;
+  --accent-dark: #8a6a3f;
+  --border: #e6dfd3;
+  --success: #4a7c59;
+  --danger: #a04a3a;
+  --radius: 14px;
+  --shadow: 0 6px 24px rgba(43,38,32,.08);
+  --max: 1180px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+}
+h1,h2,h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; margin: 0 0 .5rem; }
+h1 { font-size: clamp(2.6rem, 6vw, 4.2rem); }
+h2 { font-size: clamp(1.9rem, 4vw, 2.6rem); }
+h3 { font-size: 1.4rem; }
+p { margin: 0 0 1rem; }
+a { color: var(--accent-dark); }
+.muted { color: var(--muted); }
+.small { font-size: .85rem; }
+
+.container { max-width: var(--max); margin: 0 auto; padding: 0 1.25rem; }
+
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(250,247,242,.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner { display: flex; align-items: center; justify-content: space-between; padding: .9rem 0; }
+.brand { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; text-decoration: none; color: var(--text); }
+.nav { display: flex; gap: 1.4rem; }
+.nav a { text-decoration: none; color: var(--text); font-size: .95rem; }
+.nav a:hover { color: var(--accent-dark); }
+
+.hero { padding: 5rem 0 4rem; text-align: center; }
+.eyebrow { text-transform: uppercase; letter-spacing: .18em; font-size: .8rem; color: var(--accent-dark); margin-bottom: 1rem; }
+.date { color: var(--muted); font-size: 1.1rem; margin-bottom: 1.5rem; }
+.intro { max-width: 640px; margin: 0 auto 2rem; color: var(--muted); }
+.hero-actions { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: .7rem 1.4rem; border-radius: 999px; border: 1px solid transparent;
+  font-weight: 500; text-decoration: none; cursor: pointer; font-size: .95rem;
+  transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-dark); }
+.btn-ghost { background: transparent; border-color: var(--border); color: var(--text); }
+.btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+.section { padding: 4rem 0; }
+.section-alt { background: #f3eee5; }
+.section-head { margin-bottom: 2rem; }
+.section-head .muted { margin-top: .25rem; }
+
+.toolbar {
+  display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 1.25rem;
+}
+.toolbar input, .toolbar select {
+  padding: .65rem .9rem; border: 1px solid var(--border); border-radius: 10px;
+  background: var(--surface); font: inherit; min-width: 160px; flex: 1;
+}
+.toolbar input { flex: 2; min-width: 200px; }
+
+.stats { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; color: var(--muted); font-size: .9rem; }
+.stats strong { color: var(--text); }
+
+.gift-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem;
+}
+.gift-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column;
+  transition: transform .2s ease;
+}
+.gift-card:hover { transform: translateY(-3px); }
+.gift-img {
+  aspect-ratio: 4/3; background: #fff; display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.gift-img img { width: 100%; height: 100%; object-fit: contain; }
+.gift-body { padding: 1rem 1.1rem 1.2rem; display: flex; flex-direction: column; gap: .4rem; flex: 1; }
+.gift-cat { font-size: .75rem; text-transform: uppercase; letter-spacing: .12em; color: var(--accent-dark); }
+.gift-name { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; margin: 0; }
+.gift-desc { color: var(--muted); font-size: .9rem; flex: 1; }
+.gift-price { font-weight: 600; font-size: 1.05rem; }
+.gift-meta { display: flex; align-items: center; justify-content: space-between; gap: .5rem; flex-wrap: wrap; }
+.gift-actions { display: flex; gap: .5rem; margin-top: .6rem; }
+.gift-actions .btn { flex: 1; padding: .55rem .8rem; font-size: .85rem; }
+
+.badge {
+  display: inline-block; padding: .25rem .6rem; border-radius: 999px; font-size: .75rem; font-weight: 500;
+}
+.badge-available { background: #e7f0ea; color: var(--success); }
+.badge-reserved { background: #f0e6e3; color: var(--danger); }
+
+.empty, .loading { text-align: center; padding: 3rem 1rem; color: var(--muted); }
+
+.funds { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; margin-bottom: 2rem; }
+.fund-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem; box-shadow: var(--shadow); }
+.fund-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; }
+.progress { height: 8px; background: #eee6d9; border-radius: 999px; overflow: hidden; margin: .6rem 0; }
+.progress-bar { height: 100%; background: var(--accent); transition: width .4s ease; }
+.fund-amounts { display: flex; justify-content: space-between; font-size: .85rem; color: var(--muted); }
+
+.cash-methods { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+.methods { list-style: none; padding: 0; margin: 0 0 1rem; }
+.methods li { padding: .4rem 0; border-bottom: 1px dashed var(--border); }
+.methods li:last-child { border-bottom: none; }
+.bank-box { background: #f3eee5; border-radius: 10px; padding: 1rem; margin: 1rem 0; font-size: .9rem; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+@media (max-width: 720px) { .two-col { grid-template-columns: 1fr; } }
+
+.site-footer { padding: 2rem 0; text-align: center; color: var(--muted); font-size: .85rem; border-top: 1px solid var(--border); }
+
+/* Modal */
+.modal {
+  position: fixed; inset: 0; background: rgba(43,38,32,.45);
+  display: flex; align-items: center; justify-content: center; z-index: 100; padding: 1rem;
+}
+.modal[hidden] { display: none; }
+.modal-card {
+  background: var(--surface); border-radius: var(--radius); padding: 1.6rem;
+  width: min(460px, 100%); box-shadow: 0 20px 60px rgba(0,0,0,.2); position: relative;
+}
+.modal-close { position: absolute; top: .6rem; right: .9rem; background: none; border: none; font-size: 1.6rem; cursor: pointer; color: var(--muted); }
+.modal-card label { display: block; margin-bottom: 1rem; font-size: .9rem; }
+.modal-card input, .modal-card textarea {
+  width: 100%; margin-top: .35rem; padding: .6rem .8rem; border: 1px solid var(--border);
+  border-radius: 8px; font: inherit;
+}
+.modal-actions { display: flex; justify-content: flex-end; gap: .6rem; margin-top: .5rem; }
+.form-status { font-size: .85rem; margin-top: .6rem; min-height: 1.2rem; }
+.form-status.error { color: var(--danger); }
+.form-status.success { color: var(--success); }
