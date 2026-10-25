@@ -10,7 +10,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "high",
-    "active": true
+    "active": true,
+    "note": "We particularly like this brand and model."
   },
   {
     "id": "g2",
@@ -23,7 +24,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "medium",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g3",
@@ -36,7 +38,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "high",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g4",
@@ -49,7 +52,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "medium",
-    "active": true
+    "active": true,
+    "note": "Any brand is fine."
   },
   {
     "id": "g5",
@@ -62,7 +66,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g6",
@@ -75,7 +80,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "medium",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g7",
@@ -88,7 +94,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g8",
@@ -101,7 +108,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "medium",
-    "active": true
+    "active": true,
+    "note": "Any brand is fine."
   },
   {
     "id": "g9",
@@ -114,7 +122,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g10",
@@ -127,7 +136,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": "Brand doesn't matter."
   },
   {
     "id": "g11",
@@ -140,7 +150,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": "This product exactly."
   },
   {
     "id": "g12",
@@ -153,7 +164,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g13",
@@ -166,7 +178,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g14",
@@ -179,7 +192,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g15",
@@ -192,7 +206,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g16",
@@ -205,7 +220,8 @@
     "quantity": 2,
     "claimed": 0,
     "priority": "medium",
-    "active": true
+    "active": true,
+    "note": "Any brand is fine. High thread count would be great."
   },
   {
     "id": "g17",
@@ -218,7 +234,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": "We want lids."
   },
   {
     "id": "g18",
@@ -231,7 +248,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g19",
@@ -244,7 +262,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g20",
@@ -257,7 +276,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g21",
@@ -270,7 +290,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g22",
@@ -283,7 +304,8 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "medium",
-    "active": true
+    "active": true,
+    "note": "This product exactly."
   },
   {
     "id": "g23",
@@ -296,6 +318,7 @@
     "quantity": 1,
     "claimed": 0,
     "priority": "medium",
-    "active": true
+    "active": true,
+    "note": "Any coffee grinder with bean storage up top and settings for coarseness and grind time."
   }
 ]

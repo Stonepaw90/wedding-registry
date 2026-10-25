@@ -23,7 +23,7 @@ function ensureSheets_() {
   const ss = ss_();
   if (!ss.getSheetByName(SHEET_GIFTS)) {
     const sh = ss.insertSheet(SHEET_GIFTS);
-    sh.appendRow(['id','name','description','price','category','image','storeUrl','quantity','claimed','reservedBy','reservedAt','message','priority','active']);
+    sh.appendRow(['id','name','description','price','category','image','storeUrl','quantity','claimed','reservedBy','reservedAt','message','priority','active','note']);
   }
   if (!ss.getSheetByName(SHEET_FUNDS)) {
     const sh = ss.insertSheet(SHEET_FUNDS);
@@ -122,7 +122,7 @@ function handleAdd_(body) {
   const row = {
     id, name: g.name, description: g.description || '', price: g.price || 0, category: g.category || 'Other',
     image: g.image || '', storeUrl: g.storeUrl || '', quantity: g.quantity || 1, claimed: 0,
-    reservedBy: '', reservedAt: '', message: '', priority: g.priority || 'medium', active: true,
+    reservedBy: '', reservedAt: '', message: '', priority: g.priority || 'medium', active: true, note: g.note || '',
   };
   sh.appendRow(objectsToRow_(headers, row));
   return json_({ ok: true, id });

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registry Admin</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=5" />
+  <link rel="stylesheet" href="styles.css?v=6" />
   <style>
     .admin { max-width: 900px; margin: 2rem auto; padding: 0 1.25rem; }
     .card { background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:1.4rem; margin-bottom:1.2rem; box-shadow:var(--shadow); }
@@ -38,6 +38,7 @@
         <label>Image URL <input id="a-img" /></label>
         <label>Quantity <input id="a-qty" type="number" value="1" min="1" /></label>
         <label class="full">Description <textarea id="a-desc" rows="2"></textarea></label>
+        <label class="full">Note from the couple (optional) <textarea id="a-note" rows="2"></textarea></label>
       </div>
       <button class="btn btn-primary" id="a-add">Add gift</button>
       <p id="a-status" class="form-status"></p>
@@ -48,8 +49,8 @@
       <table><thead><tr><th>Name</th><th>Price</th><th>Status</th><th></th></tr></thead><tbody id="a-list"></tbody></table>
     </div>
   </div>
-  <script src="config.js?v=5"></script>
-  <script src="gifts-data.js?v=5"></script>
-  <script src="admin.js?v=5"></script>
+  <script src="config.js?v=6"></script>
+  <script src="gifts-data.js?v=6"></script>
+  <script src="admin.js?v=6"></script>
 </body>
 </html>

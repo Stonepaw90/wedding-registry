@@ -136,6 +136,7 @@
       image: document.getElementById('a-img').value.trim(),
       quantity: parseInt(document.getElementById('a-qty').value,10) || 1,
       description: document.getElementById('a-desc').value.trim(),
+      note: document.getElementById('a-note').value.trim(),
     };
     if (!gift.name) { status.textContent = 'Name required.'; status.className='form-status error'; return; }
     try {
@@ -143,7 +144,7 @@
       status.textContent = 'Added!';
       status.className = 'form-status success';
       // reset
-      ['a-name','a-price','a-cat','a-url','a-img','a-desc'].forEach(id => document.getElementById(id).value='');
+      ['a-name','a-price','a-cat','a-url','a-img','a-desc','a-note'].forEach(id => document.getElementById(id).value='');
       document.getElementById('a-qty').value = '1';
       render();
     } catch (e) {

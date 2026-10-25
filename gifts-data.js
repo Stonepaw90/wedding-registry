@@ -12,7 +12,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "high",
-    "active": true
+    "active": true,
+    "note": "We particularly like this brand and model."
   },
   {
     "id": "g2",
@@ -25,7 +26,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "medium",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g3",
@@ -38,7 +40,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "high",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g4",
@@ -51,7 +54,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "medium",
-    "active": true
+    "active": true,
+    "note": "Any brand is fine."
   },
   {
     "id": "g5",
@@ -64,7 +68,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g6",
@@ -77,7 +82,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "medium",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g7",
@@ -90,7 +96,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g8",
@@ -103,7 +110,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "medium",
-    "active": true
+    "active": true,
+    "note": "Any brand is fine."
   },
   {
     "id": "g9",
@@ -116,7 +124,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g10",
@@ -129,7 +138,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": "Brand doesn't matter."
   },
   {
     "id": "g11",
@@ -142,7 +152,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": "This product exactly."
   },
   {
     "id": "g12",
@@ -155,7 +166,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g13",
@@ -168,7 +180,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g14",
@@ -181,7 +194,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g15",
@@ -194,7 +208,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g16",
@@ -207,7 +222,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 2,
     "claimed": 0,
     "priority": "medium",
-    "active": true
+    "active": true,
+    "note": "Any brand is fine. High thread count would be great."
   },
   {
     "id": "g17",
@@ -220,7 +236,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": "We want lids."
   },
   {
     "id": "g18",
@@ -233,7 +250,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g19",
@@ -246,7 +264,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g20",
@@ -259,7 +278,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g21",
@@ -272,7 +292,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "low",
-    "active": true
+    "active": true,
+    "note": ""
   },
   {
     "id": "g22",
@@ -285,7 +306,8 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "medium",
-    "active": true
+    "active": true,
+    "note": "This product exactly."
   },
   {
     "id": "g23",
@@ -298,6 +320,7 @@ window.REGISTRY_GIFTS = [
     "quantity": 1,
     "claimed": 0,
     "priority": "medium",
-    "active": true
+    "active": true,
+    "note": "Any coffee grinder with bean storage up top and settings for coarseness and grind time."
   }
 ];

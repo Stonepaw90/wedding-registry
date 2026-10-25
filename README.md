@@ -63,7 +63,7 @@ GitHub Pages can only host static files, so the backend must stay external eithe
 ### 1. Create Google Sheet
 1. New Google Sheet. Create sheets: `Gifts`, `Funds`, `Reservations`.
 2. Header rows:
-   - Gifts: `id name description price category image storeUrl quantity claimed reservedBy reservedAt message priority active`
+   - Gifts: `id name description price category image storeUrl quantity claimed reservedBy reservedAt message priority active note`
    - Funds: `id name description goal raised link qrImage`
    - Reservations: `timestamp giftId name message status`
 3. Import the ready-made CSVs in `google-sheets/` (see `google-sheets/README.md`), or add your gifts manually. Set `active` = TRUE.

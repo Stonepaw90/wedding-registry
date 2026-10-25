@@ -106,6 +106,7 @@
       reservedAt: g.reservedAt || '',
       message: g.message || '',
       priority: g.priority || 'medium',
+      note: g.note || g.notes || '',
       active: g.active !== false && g.active !== 'FALSE',
     };
   }
@@ -189,6 +190,10 @@
           <div class="gift-cat">${esc(g.category)}</div>
           <h3 class="gift-name">${esc(g.name)}</h3>
           <p class="gift-desc">${esc(g.description)}</p>
+          ${g.note ? `<details class="gift-note">
+            <summary><span class="gift-note-icon" aria-hidden="true">!</span> Note from the couple</summary>
+            <p class="gift-note-text">${esc(g.note)}</p>
+          </details>` : ''}
           <div class="gift-meta">
             <span class="gift-price">${priceStr}</span>
             <span class="badge ${reserved ? 'badge-reserved' : 'badge-available'}">${reserved ? 'Reserved' : 'Available'}</span>

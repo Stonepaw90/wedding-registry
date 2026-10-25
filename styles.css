@@ -103,6 +103,18 @@ a { color: var(--accent-dark); }
 .gift-actions { display: flex; gap: .5rem; margin-top: .6rem; }
 .gift-actions .btn { flex: 1; padding: .55rem .8rem; font-size: .85rem; }
 
+.gift-note { border: 1px solid #eadfc9; background: #fdf8ec; border-radius: 8px; padding: .35rem .55rem; font-size: .8rem; }
+.gift-note summary { display: flex; align-items: center; gap: .4rem; cursor: pointer; list-style: none; font-weight: 500; color: #8a6a2f; }
+.gift-note summary::-webkit-details-marker { display: none; }
+.gift-note summary::after { content: '+'; margin-left: auto; font-weight: 600; }
+.gift-note[open] summary::after { content: '-'; }
+.gift-note-icon {
+  display: inline-flex; align-items: center; justify-content: center; flex: none;
+  width: 1.05rem; height: 1.05rem; border-radius: 50%;
+  background: #d9a84e; color: #fff; font-size: .72rem; font-weight: 700; line-height: 1;
+}
+.gift-note-text { margin: .4rem 0 .1rem; color: var(--text); font-size: .82rem; }
+
 .badge {
   display: inline-block; padding: .25rem .6rem; border-radius: 999px; font-size: .75rem; font-weight: 500;
 }
