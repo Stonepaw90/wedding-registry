@@ -6,7 +6,7 @@ window.REGISTRY_CONFIG = {
   // The admin token is NOT stored here. admin.html prompts for it and keeps it
   // only in sessionStorage, because GitHub Pages serves every file publicly.
   // Couple display overrides (also editable in index.html)
-  couple: "Emma & Abraham",
+  couple: "Abraham & Emma",
   weddingDate: "April 18, 2027",
   // Polling interval (ms) for refreshing availability
   pollMs: 30000,
