@@ -7,7 +7,7 @@ window.REGISTRY_CONFIG = {
   // only in sessionStorage, because GitHub Pages serves every file publicly.
   // Couple display overrides (also editable in index.html)
   couple: "Emma & Abraham",
-  weddingDate: "October 10, 2026",
+  weddingDate: "April 18, 2027",
   // Polling interval (ms) for refreshing availability
   pollMs: 30000,
 };

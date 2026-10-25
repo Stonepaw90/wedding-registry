@@ -12,8 +12,8 @@
   };
 
   const DEMO_FUNDS = [
-    { id: 'f1', name: 'Honeymoon Fund', description: 'Help us explore Italy.', goal: 5000, raised: 1200, link: 'https://venmo.com/emma-abraham', qrImage: '' },
-    { id: 'f2', name: 'New Home Fund', description: 'Down payment savings.', goal: 10000, raised: 3400, link: 'https://paypal.me/emmaabraham', qrImage: '' },
+    { id: 'f1', name: 'Honeymoon Fund', description: 'Help us explore Italy.', goal: 5000, raised: 1200, link: 'https://venmo.com/u/abeholleran', qrImage: '' },
+    { id: 'f2', name: 'New Home Fund', description: 'Down payment savings.', goal: 10000, raised: 3400, link: 'https://paypal.me/HouseholdHolleran', qrImage: '' },
   ];
 
   // ---------- Storage (demo) ----------
@@ -210,10 +210,13 @@
   function renderFunds() {
     const container = $('#funds');
     container.innerHTML = '';
+    // No funds in the Sheet yet: hide the empty block instead of showing an
+    // unfinished message on the public page.
     if (!state.funds.length) {
-      container.innerHTML = '<p class="muted">No cash funds set up yet.</p>';
+      container.hidden = true;
       return;
     }
+    container.hidden = false;
     state.funds.forEach(f => {
       const goal = Number(f.goal) || 0;
       const raised = Number(f.raised) || 0;
