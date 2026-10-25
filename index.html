@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>We're Getting Married! | Our Wedding Registry</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #c4a484;
+            --secondary-color: #d4b49b;
+            --accent-color: #e8d5c4;
+            --bg-color: #faf8f5;
+            --text-color: #4a4a4a;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #e8e0d9 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, var(--card-bg) 0%, var(--accent-color) 100%);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-family: 'Garamond', serif;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Registry Grid */
+        .registry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .item-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background: linear-gradient(135deg, var(--accent-color) 0%, #f5ebe0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--secondary-color);
+        }
+
+        .item-info {
+            padding: 25px;
+        }
+
+        .item-name {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-family: 'Georgia', serif;
+        }
+
+        .item-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c5f2d;
+            margin-bottom: 10px;
+        }
+
+        .item-description {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .item-link button {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: 'Georgia', serif;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .item-link button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* Cash Fund Section */
+        .cash-fund {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #fffefb 100%);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 60px;
+        }
+
+        .cash-fund h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-family: 'Garamond', serif;
+        }
+
+        .fund-message {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-bottom: 30px;
+            padding: 20px;
+            border-left: 4px solid var(--primary-color);
+            background: rgba(196, 164, 132, 0.1);
+            border-radius: 8px;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .payment-method {
+            background: white;
+            border: 2px solid var(--accent-color);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .payment-method:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-color);
+        }
+
+        .method-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .method-name {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .method-url {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .method-url:hover {
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            .registry-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+            .cash-fund { padding: 30px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.5rem; }
+            .registry-grid { grid-template-columns: 1fr; }
+            .cash-fund { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>🎉 We're Getting Married! 🎉</h1>
+            <p>Your presence at our wedding is the greatest gift of all. But if you'd like to contribute, we've created a registry to help us start our life together.</p>
+        </section>
+
+        <!-- Registry Items Grid -->
+        <section class="registry-grid" id="registry">
+            <!-- Items will be injected here by JavaScript -->
+        </section>
+
+        <!-- Cash Fund Section -->
+        <section class="cash-fund">
+            <h2>💝 Building Our Cash Fund 💝</h2>
+            <p class="fund-message">
+                Some of our favorite ways to celebrate are travel, experiences, and future adventures. 
+                If you'd prefer to contribute to a cash fund instead, that would be greatly appreciated! 
+                All contributions are gratefully received and put toward our honeymoon, house down payment, or special experiences. 💕
+            </p>
+            <div class="payment-methods">
+                <div class="payment-method">
+                    <div class="method-icon">V</div>
+                    <div class="method-name">Venmo</div>
+                    <a href="#" class="method-url">v.venmo.com/@username</a>
+                </div>
+                <div class="payment-method">
+                    <div class="method-icon">$</div>
+                    <div class="method-name">PayPal</div>
+                    <a href="#" class="method-url">www.paypal.me/username</a>
+                </div>
+                <div class="payment-method">
+                    <div class="method-icon">Z</div>
+                    <div class="method-name">Zelle</div>
+                    <p style="color: #666; line-height: 1.8;">Email us directly to receive Zelle payment information, or visit our contact page.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>Made with ❤️ for our special day</p>
+        </footer>
+    </div>
+
+    <script>
+        // Add your 23 registry items here!
+        const registryItems = [
+            {
+                id: 1,
+                name: "Wedding Day Gift",
+                price: 50.00,
+                image: "🎁",
+                description: "Contribute to our honeymoon or wedding day expenses",
+                link: "/registry-item-1", // Leave blank if no direct product link
+                type: "product"
+            },
+            
+            {
+                id: 2,
+                name: "Le Creuset Dutch Oven",
+                price: 350.00,
+                image: "🍳",
+                description: "Premium enameled cast iron dutch oven - perfect for soups, stews, and more!",
+                link: "https://www.lecreuset.com/",
+                type: "product"
+            },
+            
+            {
+                id: 3,
+                name: "KitchenAid Stand Mixer",
+                price: 450.00,
+                image: "🧁",
+                description: "Professional-grade stand mixer that will help us create delicious baked goods.",
+                link: "https://www.kitchenaid.com/",
+                type: "product"
+            },
+            
+            {
+                id: 4,
+                name: "Nespresso Machine",
+                price: 200.00,
+                image: "☕",
+                description: "Premium espresso machine for perfect coffee every morning.",
+                link: "https://www.nespresso.com/",
+                type: "product"
+            },
+            
+            {
+                id: 5,
+                name: "Kitchen Essentials Set",
+                price: 30.00,
+                image: "🔪",
+                description: "High-quality chef's knife and kitchen tools set.",
+                link: "/registry-item-5",
+                type: "product"
+            },
+            
+            {
+                id: 6,
+                name: "Bedding Set",
+                price: 150.00,
+                image: "🛏️",
+                description: "Luxury Egyptian cotton bedding for a comfortable night's sleep.",
+                link: "/registry-item-6",
+                type: "product"
+            },
+            
+            {
+                id: 7,
+                name: "Dining Table Linens",
+                price: 80.00,
+                image: "✨",
+                description: "Elegant tablecloth and napkins for special dinner occasions.",
+                link: "/registry-item-7",
+                type: "product"
+            },
+            
+            {
+                id: 8,
+                name: "Wine Glasses Set",
+                price: 45.00,
+                image: "🍷",
+                description: "Crystal wine glasses - set of 6 for intimate dinners.",
+                link: "/registry-item-8",
+                type: "product"
+            },
+            
+            {
+                id: 9,
+                name: "Espresso Cups Set",
+                price: 35.00,
+                image: "☕",
+                description: "Beautiful ceramic cups and saucers for our morning coffee ritual.",
+                link: "/registry-item-9",
+                type: "product"
+            },
+            
+            {
+                id: 10,
+                name: "Throw Blanket",
+                price: 65.00,
+                image: "🧶",
+                description: "Ultra-soft weighted blanket for cozy movie nights.",
+                link: "/registry-item-10",
+                type: "product"
+            },
+            
+            {
+                id: 11,
+                name: "Decorative Pillows",
+                price: 40.00,
+                image: "🛋️",
+                description: "Stylish throw pillows to add comfort and personality to our living room.",
+                link: "/registry-item-11",
+                type: "product"
+            },
+            
+            {
+                id: 12,
+                name: "Candle Collection",
+                price: 55.00,
+                image: "🕯️",
+                description: "Hand-poured soy candles in beautiful packaging - set of 4.",
+                link: "/registry-item-12",
+                type: "product"
+            },
+            
+            {
+                id: 13,
+                name: "Picture Frame Set",
+                price: 70.00,
+                image: "🖼️",
+                description: "Matching frames to display our special moments and family photos.",
+                link: "/registry-item-13",
+                type: "product"
+            },
+            
+            {
+                id: 14,
+                name: "Dollhouse & Play Kitchen",
+                price: 200.00,
+                image: "🎨",
+                description: "Wooden dollhouse for our future little ones.",
+                link: "/registry-item-14",
+                type: "product"
+            },
+            
+            {
+                id: 15,
+                name: "Baby Monitor",
+                price: 90.00,
+                image: "👶",
+                description: "Peace of mind with HD video and two-way audio.",
+                link: "/registry-item-15",
+                type: "product"
+            },
+            
+            {
+                id: 16,
+                name: "Stroller",
+                price: 300.00,
+                image: "👶",
+                description: "Lightweight stroller for all our adventures together.",
+                link: "/registry-item-16",
+                type: "product"
+            },
+            
+            {
+                id: 17,
+                name: "Baby Bottle Warmer",
+                price: 50.00,
+                image: "🍼",
+                description: "Quick and easy bottle warming system.",
+                link: "/registry-item-17",
+                type: "product"
+            },
+            
+            {
+                id: 18,
+                name: "Car Seat",
+                price: 250.00,
+                image: "🚗",
+                description: "Safe and comfortable for our traveling adventures.",
+                link: "/registry-item-18",
+                type: "product"
+            },
+            
+            {
+                id: 19,
+                name: "Baby Carrier",
+                price: 120.00,
+                image: "👶",
+                description: "Hands-free carrying for our first steps and beyond.",
+                link: "/registry-item-19",
+                type: "product"
+            },
+            
+            {
+                id: 20,
+                name: "Diaper Bag Backpack",
+                price: 85.00,
+                image: "🎒",
+                description: "Well-organized diaper bag that grows with us.",
+                link: "/registry-item-20",
+                type: "product"
+            },
+            
+            {
+                id: 21,
+                name: "Gift Card - Various",
+                price: 50.00,
+                image: "🎁",
+                description: "Flexibility is our gift card friends best friend! Choose your favorite store.",
+                link: "/registry-item-21",
+                type: "product"
+            },
+            
+            {
+                id: 22,
+                name: "Honeymoon Fund",
+                price: 500.00,
+                image: "✈️",
+                description: "Help us fund our dream honeymoon around the world.",
+                link: "/registry-item-22",
+                type: "product"
+            },
+            
+            {
+                id: 23,
+                name: "Future Adventures Fund",
+                price: 100.00,
+                image: "🗺️",
+                description: "Building our travel fund for future adventures and getaways.",
+                link: "/registry-item-23",
+                type: "product"
+            }
+        ];
+
+        // Function to create item card
+        function createItemCard(item) {
+            const card = document.createElement('div');
+            card.className = 'item-card';
+            
+            // Use placeholder image if no link is provided, otherwise use the link
+            const imageUrl = item.link || `https://via.placeholder.com/400x300/e8d5c4/c4a484?text=${encodeURIComponent(item.image)}`;
+            
+            card.innerHTML = `
+                <div class="item-image">${item.image}</div>
+                <div class="item-info">
+                    <h3 class="item-name">${item.name}</h3>
+                    <div class="item-price">$${item.price.toFixed(2)}</div>
+                    <p class="item-description">${item.description}</p>
+                    ${item.link ? `<button onclick="openLink('${item.link}', '${item.name}')" class="item-link">View at Store →</button>` : ''}
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // Function to open links
+        function openLink(url, itemName) {
+            if (url && url !== '/registry-item') {
+                window.open(url, '_blank');
+            }
+        }
+
+        // Render all registry items
+        const registryContainer = document.getElementById('registry');
+        
+        registryItems.forEach((item, index) => {
+            const card = createItemCard(item);
+            registryContainer.appendChild(card);
+            
+            // Add some spacing variation for visual interest
+            if (index % 5 === 0 && index < 22) {
+                const spacer = document.createElement('div');
+                spacer.style.gridColumn = '1 / -1';
+                spacer.style.height = '30px';
+                registryContainer.appendChild(spacer);
+            }
+        });
+
+        // Add a note if no links are provided for items
+        if (registryItems.filter(i => !i.link).length > 0) {
+            const container = document.querySelector('.registry-grid');
+            const spacer = document.createElement('div');
+            spacer.style.gridColumn = '1 / -1';
+            spacer.style.display = 'flex';
+            spacer.style.alignItems = 'center';
+            spacer.style.justifyContent = 'center';
+            spacer.style.padding = '20px';
+            spacer.style.color = '#666';
+            spacer.style.fontSize = '0.9rem';
+            spacer.innerHTML = '<p style="font-style:italic;">🎁 Some items from our local favorite stores</p>';
+            container.insertBefore(spacer, container.firstChild.nextSibling);
+        }
+    </script>
+</body>
+</html>
