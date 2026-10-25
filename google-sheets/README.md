@@ -21,3 +21,17 @@ relative to the GitHub Pages site. If you prefer absolute URLs, replace them wit
 
 Add your real cash funds to the **Funds** sheet. `funds.csv` contains headers only
 so the demo placeholder funds are not published by accident.
+
+## Updating product links on an existing sheet
+
+`gifts.csv` now contains real product pages instead of Google search links. If your
+sheet is already populated, do **not** re-import the CSV (that can disturb existing
+reservations). Instead:
+
+1. Open the spreadsheet → **Extensions → Apps Script**.
+2. Add a new file named `UpdateLinks`, paste `update-store-links.gs`, and save.
+3. Run the `updateStoreLinks` function once.
+4. Reload the live site; the **View** buttons will point at the retailers.
+
+The joint `Code.gs` deployment does not need to be redeployed for this.
+
