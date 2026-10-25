@@ -30,7 +30,7 @@ This repo is ready to publish. The workflow in `.github/workflows/pages.yml` dep
 2. Push this folder to the `main` branch.
 3. In the repo: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 4. The site publishes after the next push (or run the workflow manually from the **Actions** tab).
-5. Your URL will be `https://<username>.github.io/<repo>/`.
+5. Your URL will be `https://<username>.github.io/<repo>/`. This repo targets <https://stonepaw90.github.io/wedding-registry/>.
 
 No build step is needed. Asset paths are relative, so the site works under a repository subpath.
 
@@ -62,7 +62,7 @@ GitHub Pages can only host static files, so the backend must stay external eithe
    - Gifts: `id name description price category image storeUrl quantity claimed reservedBy reservedAt message priority active`
    - Funds: `id name description goal raised link qrImage`
    - Reservations: `timestamp giftId name message status`
-3. Add your gifts as rows. Set `active` = TRUE.
+3. Import the ready-made CSVs in `google-sheets/` (see `google-sheets/README.md`), or add your gifts manually. Set `active` = TRUE.
 4. For images, use paths such as `images/registry/le-creuset-signature-oval-dutch-oven-peche.png` (relative paths work) or full `https://<username>.github.io/<repo>/images/registry/...` URLs.
 
 ### 2. Deploy Apps Script
