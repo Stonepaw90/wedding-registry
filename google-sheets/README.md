@@ -22,6 +22,10 @@ relative to the GitHub Pages site. If you prefer absolute URLs, replace them wit
 Add your real cash funds to the **Funds** sheet. `funds.csv` contains headers only
 so the demo placeholder funds are not published by accident.
 
+The first time the deployed Apps Script handles a request, it adds any missing
+columns to the **Gifts** header row (for example `note`). You do not need to add
+them manually.
+
 ## Updating product links
 
 `gifts.csv` contains real product pages instead of Google search links.

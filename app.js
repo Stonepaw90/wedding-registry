@@ -9,6 +9,7 @@
     funds: [],
     filters: { q: '', category: '', status: 'all', sort: 'featured' },
     reserving: null,
+    cancelling: null,
   };
 
   const DEMO_FUNDS = [
@@ -87,6 +88,30 @@
     const data = await res.json();
     if (!res.ok || !data.ok) throw new Error(data.error || 'Reservation failed');
     // refresh
+    await apiList();
+    return data;
+  }
+
+  async function apiCancel(id) {
+    if (DEMO) {
+      const g = state.gifts.find(x => x.id === id);
+      if (!g) return { ok: false, error: 'Not found' };
+      g.claimed = Math.max(0, (g.claimed || 0) - 1);
+      if (!g.claimed) {
+        g.reservedBy = '';
+        g.reservedAt = '';
+        g.message = '';
+      }
+      demoSave();
+      return { ok: true };
+    }
+    const res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'cancel', id }),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.ok) throw new Error(data.error || 'Cancellation failed');
     await apiList();
     return data;
   }
@@ -199,12 +224,11 @@
             <span class="badge ${reserved ? 'badge-reserved' : 'badge-available'}">${reserved ? 'Reserved' : 'Available'}</span>
           </div>
           ${qtyInfo ? `<div class="muted small">${qtyInfo}</div>` : ''}
-          ${reserved && g.reservedBy ? `<div class="muted small">Reserved by ${esc(g.reservedBy)}</div>` : ''}
           <div class="gift-actions">
             ${g.storeUrl ? `<a class="btn btn-ghost" href="${esc(g.storeUrl)}" target="_blank" rel="noopener">View</a>` : ''}
-            <button class="btn btn-primary reserve-btn" data-id="${esc(g.id)}" ${reserved ? 'disabled' : ''}>
-              ${reserved ? 'Reserved' : 'Reserve'}
-            </button>
+            ${reserved
+              ? `<button class="btn btn-ghost danger cancel-btn" data-id="${esc(g.id)}">Cancel reservation</button>`
+              : `<button class="btn btn-primary reserve-btn" data-id="${esc(g.id)}">Reserve</button>`}
           </div>
         </div>
       `;
@@ -263,9 +287,27 @@
     $('#modal').hidden = true;
   }
 
+  function openCancelModal(gift) {
+    state.cancelling = gift;
+    $('#cancel-item').textContent = gift.name;
+    $('#cancel-form').reset();
+    $('#cancel-submit').disabled = true;
+    $('#cancel-status').textContent = '';
+    $('#cancel-status').className = 'form-status';
+    $('#cancel-modal').hidden = false;
+    setTimeout(() => $('#cancel-confirm').focus(), 50);
+  }
+
+  function closeCancelModal() {
+    state.cancelling = null;
+    $('#cancel-modal').hidden = true;
+  }
+
   async function handleReserve(e) {
     e.preventDefault();
     const form = e.target;
+    const gift = state.reserving;
+    if (!gift) return;
     const name = form.name.value.trim();
     const message = form.message.value.trim();
     const status = $('#modal-status');
@@ -275,7 +317,7 @@
     status.textContent = 'Reserving…';
     status.className = 'form-status';
     try {
-      await apiReserve(state.reserving.id, name, message);
+      await apiReserve(gift.id, name, message);
       status.textContent = 'Reserved! Thank you.';
       status.className = 'form-status success';
       setTimeout(closeModal, 900);
@@ -288,6 +330,29 @@
     }
   }
 
+  async function handleCancel(e) {
+    e.preventDefault();
+    const gift = state.cancelling;
+    if (!gift) return;
+    if (!$('#cancel-confirm').checked) return;
+    const status = $('#cancel-status');
+    const btn = $('#cancel-submit');
+    btn.disabled = true;
+    status.textContent = 'Cancelling…';
+    status.className = 'form-status';
+    try {
+      await apiCancel(gift.id);
+      status.textContent = 'Reservation cancelled. The gift is available again.';
+      status.className = 'form-status success';
+      renderAll();
+      setTimeout(closeCancelModal, 1100);
+    } catch (err) {
+      status.textContent = err.message || 'Could not cancel the reservation.';
+      status.className = 'form-status error';
+      btn.disabled = false;
+    }
+  }
+
   // ---------- Events ----------
   function bindEvents() {
     $('#search').addEventListener('input', e => { state.filters.q = e.target.value; renderGifts(); });
@@ -296,10 +361,16 @@
     $('#sort').addEventListener('change', e => { state.filters.sort = e.target.value; renderGifts(); });
 
     document.addEventListener('click', e => {
-      const btn = e.target.closest('.reserve-btn');
-      if (btn && !btn.disabled) {
-        const gift = state.gifts.find(g => g.id === btn.dataset.id);
+      const reserveBtn = e.target.closest('.reserve-btn');
+      if (reserveBtn && !reserveBtn.disabled) {
+        const gift = state.gifts.find(g => g.id === reserveBtn.dataset.id);
         if (gift) openModal(gift);
+        return;
+      }
+      const cancelBtn = e.target.closest('.cancel-btn');
+      if (cancelBtn) {
+        const gift = state.gifts.find(g => g.id === cancelBtn.dataset.id);
+        if (gift) openCancelModal(gift);
       }
     });
 
@@ -308,7 +379,18 @@
     $('#modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });
     $('#reserve-form').addEventListener('submit', handleReserve);
 
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    $('#cancel-close').addEventListener('click', closeCancelModal);
+    $('#cancel-keep').addEventListener('click', closeCancelModal);
+    $('#cancel-modal').addEventListener('click', e => { if (e.target.id === 'cancel-modal') closeCancelModal(); });
+    $('#cancel-confirm').addEventListener('change', e => { $('#cancel-submit').disabled = !e.target.checked; });
+    $('#cancel-form').addEventListener('submit', handleCancel);
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        closeModal();
+        closeCancelModal();
+      }
+    });
   }
 
   // ---------- Init ----------

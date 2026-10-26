@@ -6,7 +6,7 @@
   <title>Registry Admin</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=6" />
+  <link rel="stylesheet" href="styles.css?v=7" />
   <style>
     .admin { max-width: 900px; margin: 2rem auto; padding: 0 1.25rem; }
     .card { background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:1.4rem; margin-bottom:1.2rem; box-shadow:var(--shadow); }
@@ -16,6 +16,8 @@
     input,textarea,select { width:100%; margin-top:.3rem; padding:.55rem .7rem; border:1px solid var(--border); border-radius:8px; font:inherit; }
     .row { display:flex; gap:.6rem; flex-wrap:wrap; }
     table { width:100%; border-collapse:collapse; font-size:.85rem; }
+    .table-wrap { overflow-x:auto; }
+    td .btn { padding:.4rem .8rem; font-size:.78rem; white-space:nowrap; }
     th,td { padding:.5rem; border-bottom:1px solid var(--border); text-align:left; }
     .danger { color: var(--danger); }
   </style>
@@ -24,10 +26,11 @@
   <header class="site-header"><div class="container header-inner"><a class="brand" href="index.html">A &amp; E</a><nav class="nav"><a href="index.html">Site</a></nav></div></header>
   <div class="admin">
     <h1>Registry Admin</h1>
-    <p class="muted">You will be asked for the admin token. Use to add/remove gifts. (In demo mode, edits stay in this browser.)</p>
+    <p class="muted">Enter the admin token when prompted to add, edit, or remove gifts and release reservations.</p>
+    <p id="a-load-status" class="form-status" role="status"></p>
 
     <div class="card">
-      <h3>Add a gift</h3>
+      <h3 id="a-form-title">Add a gift</h3>
       <div class="grid">
         <label>Name <input id="a-name" required /></label>
         <label>Price <input id="a-price" type="number" step="0.01" /></label>
@@ -41,17 +44,21 @@
         <label class="full">Description <textarea id="a-desc" rows="2"></textarea></label>
         <label class="full">Note from the couple (optional) <textarea id="a-note" rows="2"></textarea></label>
       </div>
-      <button class="btn btn-primary" id="a-add">Add gift</button>
+      <div class="row">
+        <button class="btn btn-primary" id="a-add">Add gift</button>
+        <button class="btn btn-ghost" id="a-cancel-edit" hidden>Cancel edit</button>
+      </div>
       <p id="a-status" class="form-status"></p>
     </div>
 
     <div class="card">
       <h3>Current gifts</h3>
-      <table><thead><tr><th>Name</th><th>Price</th><th>Status</th><th></th></tr></thead><tbody id="a-list"></tbody></table>
+      <div class="table-wrap">
+        <table><thead><tr><th>Name</th><th>Price</th><th>Status</th><th>Reserved by</th><th></th></tr></thead><tbody id="a-list"></tbody></table>
+      </div>
     </div>
   </div>
   <script src="config.js?v=7"></script>
-  <script src="gifts-data.js?v=6"></script>
-  <script src="admin.js?v=6"></script>
+  <script src="admin.js?v=7"></script>
 </body>
 </html>

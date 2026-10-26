@@ -61,6 +61,10 @@ a { color: var(--accent-dark); }
 .btn-primary { background: var(--accent); color: #fff; }
 .btn-primary:hover { background: var(--accent-dark); }
 .btn-ghost { background: transparent; border-color: var(--border); color: var(--text); }
+.btn-ghost.danger { color: var(--danger); border-color: #e0c4bd; }
+.btn-ghost.danger:hover { background: #f7ece9; }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-danger:hover { background: #863c2f; }
 .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
 
 .section { padding: 4rem 0; }
@@ -158,6 +162,12 @@ a { color: var(--accent-dark); }
   border-radius: 8px; font: inherit;
 }
 .modal-actions { display: flex; justify-content: flex-end; gap: .6rem; margin-top: .5rem; }
+.warning-box {
+  background: #fdf1ed; border: 1px solid #f0d2c9; color: #7d3527;
+  border-radius: 10px; padding: .8rem .9rem; font-size: .88rem;
+}
+.check-line { display: flex; align-items: flex-start; gap: .55rem; font-size: .88rem; }
+.modal-card .check-line input { width: auto; flex: none; margin: .25rem 0 0; }
 .form-status { font-size: .85rem; margin-top: .6rem; min-height: 1.2rem; }
 .form-status.error { color: var(--danger); }
 .form-status.success { color: var(--success); }

@@ -2,9 +2,8 @@
   'use strict';
   const CFG = window.REGISTRY_CONFIG || {};
   const ENDPOINT = (CFG.endpoint || '').trim();
-  const DEMO = !ENDPOINT;
 
-  const state = { gifts: [] };
+  const state = { gifts: [], editingId: null };
 
   // Never ship the admin token in config.js on a public site. Ask for it once
   // per browser tab and keep it in sessionStorage.
@@ -17,90 +16,51 @@
     return token;
   }
 
-  async function demoLoad() {
-    let base = [];
-    try {
-      const res = await fetch('gifts.json');
-      if (res.ok) base = await res.json();
-    } catch (e) { base = []; }
-    if (!base.length && Array.isArray(window.REGISTRY_GIFTS)) base = window.REGISTRY_GIFTS;
-    if (!base.length) base = [];
-    try {
-      const g = JSON.parse(localStorage.getItem('demo_gifts') || 'null');
-      const merged = new Map(base.map(x => [x.id, { ...x }]));
-      for (const gg of Array.isArray(g) ? g : []) {
-        const fresh = merged.get(gg.id);
-        if (fresh) {
-          for (const key of ['claimed', 'reservedBy', 'reservedAt', 'message']) {
-            if (gg[key] !== undefined) fresh[key] = gg[key];
-          }
-        } else {
-          merged.set(gg.id, gg);
-        }
-      }
-      state.gifts = [...merged.values()];
-    } catch (e) {
-      state.gifts = base.map(x => ({ ...x }));
-    }
+  function clearToken() {
+    sessionStorage.removeItem('registry_admin_token');
   }
 
-  async function load() {
-    if (DEMO) { await demoLoad(); return; }
-    const res = await fetch(ENDPOINT + '?action=list');
-    const data = await res.json();
-    state.gifts = data.gifts || [];
-  }
-
-  async function addGift(gift) {
-    if (DEMO) {
-      gift.id = 'g' + Date.now();
-      gift.claimed = 0;
-      gift.active = true;
-      state.gifts.push(gift);
-      localStorage.setItem('demo_gifts', JSON.stringify(state.gifts));
-      return { ok: true };
-    }
+  async function api(body) {
+    if (!ENDPOINT) throw new Error('Registry endpoint is not configured in config.js.');
     const res = await fetch(ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ action: 'add', token: adminToken(), gift }),
+      body: JSON.stringify({ ...body, token: adminToken() }),
     });
-    const data = await res.json();
-    if (!res.ok || !data.ok) throw new Error(data.error || 'Add failed');
-    await load();
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.ok) {
+      const message = data.error || 'Request failed';
+      if (String(message).toLowerCase().includes('unauthorized')) {
+        clearToken();
+        throw new Error('Unauthorized. Reload the page and enter the correct admin token.');
+      }
+      throw new Error(message);
+    }
     return data;
   }
 
-  async function removeGift(id) {
-    if (DEMO) {
-      state.gifts = state.gifts.filter(g => g.id !== id);
-      localStorage.setItem('demo_gifts', JSON.stringify(state.gifts));
-      return;
+  async function load() {
+    // adminList is token-gated and includes reservation names and messages.
+    const data = await api({ action: 'adminList' });
+    state.gifts = data.gifts || [];
+  }
+
+  async function saveGift(gift) {
+    if (state.editingId) {
+      await api({ action: 'update', gift: { ...gift, id: state.editingId } });
+    } else {
+      await api({ action: 'add', gift });
     }
-    const res = await fetch(ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ action: 'remove', token: adminToken(), id }),
-    });
-    const data = await res.json();
-    if (!res.ok || !data.ok) throw new Error(data.error || 'Remove failed');
+    await load();
+  }
+
+  async function removeGift(id) {
+    await api({ action: 'remove', id });
     await load();
   }
 
   async function unreserve(id) {
-    if (DEMO) {
-      const g = state.gifts.find(x => x.id === id);
-      if (g) { g.claimed = 0; g.reservedBy = ''; g.reservedAt = ''; g.message = ''; }
-      localStorage.setItem('demo_gifts', JSON.stringify(state.gifts));
-      return;
-    }
-    const res = await fetch(ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ action: 'unreserve', token: adminToken(), id }),
-    });
-    const data = await res.json();
-    if (!res.ok || !data.ok) throw new Error(data.error || 'Unreserve failed');
+    await api({ action: 'unreserve', id });
     await load();
   }
 
@@ -110,11 +70,14 @@
     state.gifts.forEach(g => {
       const tr = document.createElement('tr');
       const reserved = (g.claimed || 0) >= (g.quantity || 1);
+      const reservedBy = g.reservedBy ? escapeHtml(g.reservedBy) : '&mdash;';
       tr.innerHTML = `
         <td>${escapeHtml(g.name)}</td>
-        <td>${g.price ? '$' + Number(g.price).toFixed(2) : '—'}</td>
+        <td>${g.price ? '$' + Number(g.price).toFixed(2) : '&mdash;'}</td>
         <td>${reserved ? 'Reserved' : 'Available'}</td>
+        <td>${reservedBy}</td>
         <td>
+          <button class="btn btn-ghost" data-act="edit" data-id="${g.id}">Edit</button>
           ${reserved ? `<button class="btn btn-ghost" data-act="unreserve" data-id="${g.id}">Release</button>` : ''}
           <button class="btn btn-ghost danger" data-act="remove" data-id="${g.id}">Delete</button>
         </td>
@@ -125,48 +88,103 @@
 
   function escapeHtml(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-  document.getElementById('a-add').addEventListener('click', async () => {
-    const status = document.getElementById('a-status');
+  function field(id) { return document.getElementById(id); }
+
+  function resetForm() {
+    state.editingId = null;
+    ['a-name','a-price','a-cat','a-url','a-img','a-desc','a-note'].forEach(id => { field(id).value = ''; });
+    field('a-qty').value = '1';
+    field('a-prio').value = 'medium';
+    field('a-form-title').textContent = 'Add a gift';
+    field('a-add').textContent = 'Add gift';
+    field('a-cancel-edit').hidden = true;
+    field('a-status').textContent = '';
+    field('a-status').className = 'form-status';
+  }
+
+  function startEdit(g) {
+    state.editingId = g.id;
+    field('a-name').value = g.name || '';
+    field('a-price').value = g.price === '' || g.price === undefined ? '' : g.price;
+    field('a-cat').value = g.category || '';
+    field('a-prio').value = g.priority || 'medium';
+    field('a-url').value = g.storeUrl || '';
+    field('a-img').value = g.image || '';
+    field('a-qty').value = g.quantity || 1;
+    field('a-desc').value = g.description || '';
+    field('a-note').value = g.note || '';
+    field('a-form-title').textContent = 'Edit gift';
+    field('a-add').textContent = 'Save changes';
+    field('a-cancel-edit').hidden = false;
+    field('a-status').textContent = 'Editing "' + g.name + '".';
+    field('a-status').className = 'form-status';
+    document.querySelector('.admin').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  field('a-add').addEventListener('click', async () => {
+    const status = field('a-status');
     const gift = {
-      name: document.getElementById('a-name').value.trim(),
-      price: parseFloat(document.getElementById('a-price').value) || 0,
-      category: document.getElementById('a-cat').value.trim() || 'Other',
-      priority: document.getElementById('a-prio').value,
-      storeUrl: document.getElementById('a-url').value.trim(),
-      image: document.getElementById('a-img').value.trim(),
-      quantity: parseInt(document.getElementById('a-qty').value,10) || 1,
-      description: document.getElementById('a-desc').value.trim(),
-      note: document.getElementById('a-note').value.trim(),
+      name: field('a-name').value.trim(),
+      price: parseFloat(field('a-price').value) || 0,
+      category: field('a-cat').value.trim() || 'Other',
+      priority: field('a-prio').value,
+      storeUrl: field('a-url').value.trim(),
+      image: field('a-img').value.trim(),
+      quantity: parseInt(field('a-qty').value, 10) || 1,
+      description: field('a-desc').value.trim(),
+      note: field('a-note').value.trim(),
     };
-    if (!gift.name) { status.textContent = 'Name required.'; status.className='form-status error'; return; }
+    if (!gift.name) { status.textContent = 'Name required.'; status.className = 'form-status error'; return; }
+
+    const editing = !!state.editingId;
+    const btn = field('a-add');
+    btn.disabled = true;
+    status.textContent = editing ? 'Saving…' : 'Adding…';
+    status.className = 'form-status';
     try {
-      await addGift(gift);
-      status.textContent = 'Added!';
+      await saveGift(gift);
+      resetForm();
+      status.textContent = editing ? 'Changes saved.' : 'Gift added.';
       status.className = 'form-status success';
-      // reset
-      ['a-name','a-price','a-cat','a-url','a-img','a-desc','a-note'].forEach(id => document.getElementById(id).value='');
-      document.getElementById('a-qty').value = '1';
       render();
     } catch (e) {
       status.textContent = e.message;
       status.className = 'form-status error';
+    } finally {
+      btn.disabled = false;
     }
   });
+
+  field('a-cancel-edit').addEventListener('click', resetForm);
 
   document.getElementById('a-list').addEventListener('click', async (e) => {
     const btn = e.target.closest('button[data-act]');
     if (!btn) return;
     const id = btn.dataset.id;
     const act = btn.dataset.act;
+    const gift = state.gifts.find(g => g.id === id);
+    if (act === 'edit') {
+      if (gift) startEdit(gift);
+      return;
+    }
+    if (act === 'remove' && !confirm('Delete "' + (gift ? gift.name : id) + '"? This cannot be undone.')) return;
     try {
       if (act === 'remove') await removeGift(id);
       if (act === 'unreserve') await unreserve(id);
       render();
-    } catch (err) { alert(err.message); }
+    } catch (err) {
+      alert(err.message);
+    }
   });
 
   (async () => {
-    await load();
-    render();
+    const status = document.getElementById('a-load-status');
+    try {
+      await load();
+      render();
+    } catch (e) {
+      status.textContent = e.message;
+      status.className = 'form-status error';
+    }
   })();
 })();

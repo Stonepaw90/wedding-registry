@@ -5,10 +5,11 @@ A free, no-paid-services wedding registry: static HTML/CSS/JS site + Google Shee
 ## Features
 - Hero, registry grid, cash gifts, shipping info, FAQ
 - Search, filter by category/status, sort by price/name/featured
-- First-come reservation with name (no accounts)
+- First-come reservation with name; reservation names stay private
+- Guests can cancel their own reservation from any device with one confirmation
 - Cash gifts via Venmo/PayPal/Zelle/bank transfer (no payment processing on site)
 - Cash funds with progress bars
-- Admin page to add/remove gifts and release reservations
+- Admin page to add, edit, delete, and release gifts
 - Demo mode (localStorage) when backend not configured
 - Local product images in `images/registry/`
 
@@ -95,11 +96,14 @@ Push to GitHub and enable Pages as described above. Netlify, Vercel, and Cloudfl
 No paid services. Edit cash methods in `index.html` (Venmo/PayPal/Zelle/bank details) and fund links in the `Funds` sheet. Funds progress updates when you update `raised`.
 
 ## Admin
-Open `admin.html` and enter the `ADMIN_TOKEN` when prompted. Add gifts, delete, or release reservations. The admin page is public, so treat the token as the only protection.
+Open `admin.html` and enter the `ADMIN_TOKEN` when prompted. Add gifts, edit existing gifts, delete them, or release reservations. The admin page is public, so treat the token as the only protection.
+
+The public `list` endpoint strips `reservedBy`, `reservedAt`, and `message`, so guests never see who reserved a gift. The admin page uses the token-gated `adminList` action.
 
 ## Notes
 - Concurrency: Apps Script uses `LockService` to prevent double-booking.
-- Privacy: only first name is shown as "Reserved by X"; adjust in `app.js` if desired.
+- Privacy: reservation names and messages are only returned to the admin page.
+- Guest cancellation: anyone with the page can release a reserved gift by clicking "Cancel reservation" and confirming. This is intentional — there are no accounts, tokens, or identity checks. Every cancellation is logged in the `Reservations` sheet.
 - Demo mode is per-browser only. Configure the Apps Script endpoint for shared reservations.
 
 ## Ideas to consider (future)
