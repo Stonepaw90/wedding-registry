@@ -10,6 +10,7 @@
     filters: { q: '', category: '', status: 'all', sort: 'featured' },
     reserving: null,
     cancelling: null,
+    contributing: null,
   };
 
   const DEMO_FUNDS = [
@@ -112,6 +113,25 @@
     });
     const data = await res.json();
     if (!res.ok || !data.ok) throw new Error(data.error || 'Cancellation failed');
+    await apiList();
+    return data;
+  }
+
+  async function apiContribute(fundId, amount, name, note) {
+    if (DEMO) {
+      const f = state.funds.find(x => x.id === fundId);
+      if (!f) return { ok: false, error: 'Fund not found' };
+      f.raised = Math.round(((Number(f.raised) || 0) + amount) * 100) / 100;
+      demoSave();
+      return { ok: true, raised: f.raised };
+    }
+    const res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'contribute', fundId, amount, name, note }),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.ok) throw new Error(data.error || 'Contribution failed');
     await apiList();
     return data;
   }
@@ -243,23 +263,40 @@
     // unfinished message on the public page.
     if (!state.funds.length) {
       container.hidden = true;
+      const empty = $('#funds-empty');
+      if (empty) empty.hidden = false;
       return;
     }
     container.hidden = false;
+    const empty = $('#funds-empty');
+    if (empty) empty.hidden = true;
     state.funds.forEach(f => {
       const goal = Number(f.goal) || 0;
       const raised = Number(f.raised) || 0;
       const pct = goal > 0 ? Math.min(100, (raised / goal) * 100) : 0;
+      const pctLabel = goal > 0 ? `${Math.round(pct)}%` : '';
+      const remaining = Math.max(0, goal - raised);
       const card = document.createElement('div');
       card.className = 'fund-card';
       card.innerHTML = `
-        <div class="fund-name">${esc(f.name)}</div>
+        <div class="fund-head">
+          <div class="fund-name">${esc(f.name)}</div>
+          ${pctLabel ? `<span class="fund-pct">${pctLabel}</span>` : ''}
+        </div>
         <p class="muted small">${esc(f.description || '')}</p>
         ${goal > 0 ? `
-          <div class="progress"><div class="progress-bar" style="width:${pct}%"></div></div>
-          <div class="fund-amounts"><span>$${raised.toLocaleString()} raised</span><span>Goal $${goal.toLocaleString()}</span></div>
-        ` : ''}
-        ${f.link ? `<a class="btn btn-primary" style="margin-top:.8rem;width:100%;" href="${esc(f.link)}" target="_blank" rel="noopener">Contribute</a>` : ''}
+          <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(pct)}">
+            <div class="progress-bar" style="width:${pct}%"></div>
+          </div>
+          <div class="fund-amounts"><span><strong>$${raised.toLocaleString(undefined, { maximumFractionDigits: 2 })}</strong> raised</span><span>Goal $${goal.toLocaleString()}</span></div>
+          <div class="fund-remaining">${remaining > 0 ? `$${remaining.toLocaleString(undefined, { maximumFractionDigits: 2 })} to go` : 'Goal reached!'}</div>
+        ` : `
+          <div class="fund-amounts"><span><strong>$${raised.toLocaleString(undefined, { maximumFractionDigits: 2 })}</strong> raised</span></div>
+        `}
+        <div class="fund-actions">
+          <button class="btn btn-primary fund-btn" data-fund-id="${esc(f.id)}">Add cash!</button>
+          ${f.link ? `<a class="btn btn-ghost" href="${esc(f.link)}" target="_blank" rel="noopener">Send</a>` : ''}
+        </div>
       `;
       container.appendChild(card);
     });
@@ -301,6 +338,35 @@
   function closeCancelModal() {
     state.cancelling = null;
     $('#cancel-modal').hidden = true;
+  }
+
+  function openFundModal(fund) {
+    state.contributing = fund;
+    const raised = Number(fund.raised) || 0;
+    const goal = Number(fund.goal) || 0;
+    $('#fund-item').textContent = fund.name;
+    $('#fund-progress').textContent = goal > 0
+      ? `Currently $${raised.toLocaleString(undefined, { maximumFractionDigits: 2 })} raised of a $${goal.toLocaleString()} goal.`
+      : `Currently $${raised.toLocaleString(undefined, { maximumFractionDigits: 2 })} raised.`;
+    const send = $('#fund-send');
+    if (fund.link) {
+      send.hidden = false;
+      send.innerHTML = `Send first — <a href="${esc(fund.link)}" target="_blank" rel="noopener">open the payment link</a> or use any method above — then record the amount below.`;
+    } else {
+      send.hidden = true;
+      send.innerHTML = '';
+    }
+    $('#fund-form').reset();
+    $('#fund-status').textContent = '';
+    $('#fund-status').className = 'form-status';
+    $('#fund-submit').disabled = false;
+    $('#fund-modal').hidden = false;
+    setTimeout(() => $('#fund-amount').focus(), 50);
+  }
+
+  function closeFundModal() {
+    state.contributing = null;
+    $('#fund-modal').hidden = true;
   }
 
   async function handleReserve(e) {
@@ -353,6 +419,38 @@
     }
   }
 
+  async function handleContribute(e) {
+    e.preventDefault();
+    const fund = state.contributing;
+    if (!fund) return;
+    const btn = $('#fund-submit');
+    if (btn.disabled) return;
+    const amount = Math.round((parseFloat($('#fund-amount').value) || 0) * 100) / 100;
+    const name = $('#fund-name').value.trim();
+    const note = $('#fund-note').value.trim();
+    const status = $('#fund-status');
+    if (!Number.isFinite(amount) || amount <= 0) {
+      status.textContent = 'Enter an amount greater than zero.';
+      status.className = 'form-status error';
+      $('#fund-amount').focus();
+      return;
+    }
+    btn.disabled = true;
+    status.textContent = 'Adding…';
+    status.className = 'form-status';
+    try {
+      await apiContribute(fund.id, amount, name, note);
+      status.textContent = `Thank you! $${amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} added to ${fund.name}.`;
+      status.className = 'form-status success';
+      renderAll();
+      setTimeout(closeFundModal, 1400);
+    } catch (err) {
+      status.textContent = err.message || 'Could not add the contribution.';
+      status.className = 'form-status error';
+      btn.disabled = false;
+    }
+  }
+
   // ---------- Events ----------
   function bindEvents() {
     $('#search').addEventListener('input', e => { state.filters.q = e.target.value; renderGifts(); });
@@ -371,6 +469,12 @@
       if (cancelBtn) {
         const gift = state.gifts.find(g => g.id === cancelBtn.dataset.id);
         if (gift) openCancelModal(gift);
+        return;
+      }
+      const fundBtn = e.target.closest('.fund-btn');
+      if (fundBtn) {
+        const fund = state.funds.find(f => f.id === fundBtn.dataset.fundId);
+        if (fund) openFundModal(fund);
       }
     });
 
@@ -385,10 +489,16 @@
     $('#cancel-confirm').addEventListener('change', e => { $('#cancel-submit').disabled = !e.target.checked; });
     $('#cancel-form').addEventListener('submit', handleCancel);
 
+    $('#fund-close').addEventListener('click', closeFundModal);
+    $('#fund-cancel').addEventListener('click', closeFundModal);
+    $('#fund-modal').addEventListener('click', e => { if (e.target.id === 'fund-modal') closeFundModal(); });
+    $('#fund-form').addEventListener('submit', handleContribute);
+
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
         closeModal();
         closeCancelModal();
+        closeFundModal();
       }
     });
   }
@@ -421,7 +531,7 @@
       // show a small banner
       const banner = document.createElement('div');
       banner.style.cssText = 'position:fixed;bottom:10px;left:10px;background:#fff3cd;border:1px solid #ffe69c;padding:6px 10px;border-radius:8px;font-size:.8rem;z-index:200;';
-      banner.textContent = 'Demo mode — reservations saved in this browser. Configure config.js for shared data.';
+      banner.textContent = 'Demo mode — reservations and contributions saved in this browser. Configure config.js for shared data.';
       document.body.appendChild(banner);
     }
   }

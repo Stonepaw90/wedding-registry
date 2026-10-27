@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=7" />
+  <link rel="stylesheet" href="styles.css?v=8" />
 </head>
 <body>
   <header class="site-header">
@@ -17,10 +17,10 @@
       <a class="brand" href="#top">A &amp; E</a>
       <nav class="nav">
         <a href="#registry">Registry</a>
-        <a href="#cash">Cash Gifts</a>
         <a href="#other">Registries</a>
         <a href="#info">Info</a>
         <a href="#faq">FAQ</a>
+        <a href="#cash">Add cash!</a>
       </nav>
     </div>
   </header>
@@ -38,7 +38,7 @@
         </p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#registry">Browse Registry</a>
-          <a class="btn btn-ghost" href="#cash">Cash Gifts</a>
+          <a class="btn btn-ghost" href="#cash">Add cash!</a>
         </div>
       </div>
     </section>
@@ -48,6 +48,7 @@
         <div class="section-head">
           <h2>Gift Registry</h2>
           <p class="muted">Reserve an item so others know it's taken. First come, first served.</p>
+          <p class="muted small">Prefer to give cash? <a href="#cash">Add cash!</a></p>
         </div>
 
         <div class="toolbar">
@@ -72,34 +73,6 @@
         <div id="gift-grid" class="gift-grid" aria-live="polite"></div>
         <div id="empty" class="empty" hidden>No gifts match your filters.</div>
         <div id="loading" class="loading">Loading registry…</div>
-      </div>
-    </section>
-
-    <section id="cash" class="section section-alt">
-      <div class="container">
-        <div class="section-head">
-          <h2>Cash Gifts</h2>
-          <p class="muted">No paid services involved — send directly via the methods below.</p>
-        </div>
-        <div id="funds" class="funds"></div>
-        <div class="cash-methods">
-          <h3>How to send</h3>
-          <ul class="methods">
-            <li><strong>Venmo:</strong> <a href="https://venmo.com/u/abeholleran" target="_blank" rel="noopener">@abeholleran</a> (memo: "Wedding gift")</li>
-            <li><strong>PayPal:</strong> <a href="https://paypal.me/HouseholdHolleran" target="_blank" rel="noopener">paypal.me/HouseholdHolleran</a></li>
-            <li><strong>Zelle:</strong> Coming soon — email us if you'd like to use Zelle.</li>
-            <li><strong>Bank transfer:</strong> see details below</li>
-          </ul>
-          <div class="bank-box">
-            <p><strong>Bank transfer details</strong></p>
-            <p>Account name: Abraham Holleran<br />
-            Bank: HFCU<br />
-            Routing: 211380483<br />
-            Account number: email <a href="mailto:household.holleran@gmail.com">household.holleran@gmail.com</a> for the account number<br />
-            Memo: "Wedding gift + your name"</p>
-          </div>
-          <p class="muted small">Please include your name in the memo so we can thank you personally. Cash gifts are never required.</p>
-        </div>
       </div>
     </section>
 
@@ -160,6 +133,14 @@
           <p>Cash gifts go directly to us via Venmo/PayPal/Zelle/bank transfer. This site never processes payments or stores card details.</p>
         </details>
         <details>
+          <summary>How do I add cash?</summary>
+          <p>Send your gift using any method in the Cash Gifts section, then click <strong>Add cash!</strong> on the fund and enter the amount you sent or are sending. The progress bar updates immediately.</p>
+        </details>
+        <details>
+          <summary>Can I change or undo a recorded cash gift?</summary>
+          <p>Recorded gifts cannot be undone from the site. If you need to correct something, email us at <a href="mailto:household.holleran@gmail.com">household.holleran@gmail.com</a> and we'll update it.</p>
+        </details>
+        <details>
           <summary>Do I need an account?</summary>
           <p>No. Just your name when reserving. No passwords, no sign-up.</p>
         </details>
@@ -167,6 +148,41 @@
           <summary>Shipping &amp; returns</summary>
           <p>Shipping details are still being finalized. We'll post the address here; email us in the meantime if you need it.</p>
         </details>
+      </div>
+    </section>
+
+    <section id="cash" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Cash Gifts</h2>
+          <p class="muted">Sending cash? Use any method below. If you'd like to give toward one of our funds, click <strong>Add cash!</strong> so we can keep track and thank you. This site never processes payments.</p>
+        </div>
+
+        <div class="cash-methods">
+          <h3>How to send</h3>
+          <ul class="methods">
+            <li><strong>Venmo:</strong> <a href="https://venmo.com/u/abeholleran" target="_blank" rel="noopener">@abeholleran</a> (memo: "Wedding gift")</li>
+            <li><strong>PayPal:</strong> <a href="https://paypal.me/HouseholdHolleran" target="_blank" rel="noopener">paypal.me/HouseholdHolleran</a></li>
+            <li><strong>Zelle:</strong> Coming soon — email us if you'd like to use Zelle.</li>
+            <li><strong>Bank transfer:</strong> see details below</li>
+          </ul>
+          <div class="bank-box">
+            <p><strong>Bank transfer details</strong></p>
+            <p>Account name: Abraham Holleran<br />
+            Bank: HFCU<br />
+            Routing: 211380483<br />
+            Account number: email <a href="mailto:household.holleran@gmail.com">household.holleran@gmail.com</a> for the account number<br />
+            Memo: "Wedding gift + your name"</p>
+          </div>
+          <p class="muted small">Please include your name in the memo so we can thank you personally. Cash gifts are never required.</p>
+        </div>
+
+        <div id="funds-empty" class="empty" hidden>
+          <p><strong>Cash funds are coming soon.</strong></p>
+          <p class="muted">In the meantime, you can still send a cash gift using the methods above.</p>
+        </div>
+
+        <div id="funds" class="funds"></div>
       </div>
     </section>
   </main>
@@ -220,8 +236,39 @@
     </div>
   </div>
 
+  <!-- Add cash modal -->
+  <div id="fund-modal" class="modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="fund-title">
+      <button class="modal-close" id="fund-close" aria-label="Close">&times;</button>
+      <h3 id="fund-title">Add cash</h3>
+      <p id="fund-item" class="muted"></p>
+      <p id="fund-progress" class="muted small"></p>
+      <p id="fund-send" class="fund-send" hidden></p>
+      <form id="fund-form">
+        <label>Amount (USD)
+          <span class="amount-field">
+            <span aria-hidden="true">$</span>
+            <input id="fund-amount" name="amount" type="number" inputmode="decimal" min="0.01" step="0.01" required placeholder="100.00" />
+          </span>
+        </label>
+        <label>Your name (optional — helps us thank you)
+          <input id="fund-name" name="name" type="text" maxlength="80" placeholder="Jane Doe" autocomplete="name" />
+        </label>
+        <label>Note (optional)
+          <textarea id="fund-note" name="note" rows="2" maxlength="200" placeholder="Sent via Venmo"></textarea>
+        </label>
+        <p class="fund-disclaimer">This records your gift so we can thank you. It does not send money — use the payment details above first. Contributions cannot be undone from this site.</p>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="fund-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="fund-submit">Add cash</button>
+        </div>
+        <p id="fund-status" class="form-status" role="status"></p>
+      </form>
+    </div>
+  </div>
+
   <script src="config.js?v=7"></script>
   <script src="gifts-data.js?v=6"></script>
-  <script src="app.js?v=8"></script>
+  <script src="app.js?v=9"></script>
 </body>
 </html>

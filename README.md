@@ -8,7 +8,8 @@ A free, no-paid-services wedding registry: static HTML/CSS/JS site + Google Shee
 - First-come reservation with name; reservation names stay private
 - Guests can cancel their own reservation from any device with one confirmation
 - Cash gifts via Venmo/PayPal/Zelle/bank transfer (no payment processing on site)
-- Cash funds with progress bars
+- Cash funds with percentage progress bars and an "Add cash!" form at the bottom of the page
+- Guests record what they sent (or are sending); the fund total and progress bar update immediately
 - Admin page to add, edit, delete, and release gifts
 - Demo mode (localStorage) when backend not configured
 - Local product images in `images/registry/`
@@ -20,7 +21,7 @@ Run a small static server from this folder:
 python -m http.server 8000
 ```
 
-Then open <http://localhost:8000>. Reservations save to your browser's localStorage.
+Then open <http://localhost:8000>. Reservations and recorded contributions save to your browser's localStorage.
 Opening `index.html` directly also works (`gifts-data.js` provides the catalog), but a local server is closer to production.
 
 ## Deploy to GitHub Pages
@@ -62,11 +63,12 @@ GitHub Pages can only host static files, so the backend must stay external eithe
 ## Production setup (Google Sheets, free)
 
 ### 1. Create Google Sheet
-1. New Google Sheet. Create sheets: `Gifts`, `Funds`, `Reservations`.
+1. New Google Sheet. Create sheets: `Gifts`, `Funds`, `Reservations`, `Contributions`.
 2. Header rows:
    - Gifts: `id name description price category image storeUrl quantity claimed reservedBy reservedAt message priority active note`
    - Funds: `id name description goal raised link qrImage`
    - Reservations: `timestamp giftId name message status`
+   - Contributions: `timestamp fundId fundName name amount note`
 3. Import the ready-made CSVs in `google-sheets/` (see `google-sheets/README.md`), or add your gifts manually. Set `active` = TRUE.
 4. For images, use paths such as `images/registry/le-creuset-signature-oval-dutch-oven-peche.png` (relative paths work) or full `https://<username>.github.io/<repo>/images/registry/...` URLs.
 
@@ -93,7 +95,11 @@ Do **not** put the admin token in `config.js`; GitHub Pages serves it publicly. 
 Push to GitHub and enable Pages as described above. Netlify, Vercel, and Cloudflare Pages also work with the same static files.
 
 ### Cash gifts
-No paid services. Edit cash methods in `index.html` (Venmo/PayPal/Zelle/bank details) and fund links in the `Funds` sheet. Funds progress updates when you update `raised`.
+No paid services. Edit cash methods in `index.html` (Venmo/PayPal/Zelle/bank details) and fund links in the `Funds` sheet.
+
+Each `Funds` row shows a percentage bar based on `raised / goal`. Guests can click **Add cash!**, enter the amount they sent (or are sending), and optionally leave their name and a note. That immediately adds the amount to `raised`, appends a row to `Contributions`, and updates the bar. The site never processes a payment; guests send money directly using the methods listed above the funds.
+
+There is intentionally no undo button. To correct a recorded contribution, edit `raised` in the `Funds` sheet (and the matching row in `Contributions` for your records).
 
 ## Admin
 Open `admin.html` and enter the `ADMIN_TOKEN` when prompted. Add gifts, edit existing gifts, delete them, or release reservations. The admin page is public, so treat the token as the only protection.
@@ -101,9 +107,10 @@ Open `admin.html` and enter the `ADMIN_TOKEN` when prompted. Add gifts, edit exi
 The public `list` endpoint strips `reservedBy`, `reservedAt`, and `message`, so guests never see who reserved a gift. The admin page uses the token-gated `adminList` action.
 
 ## Notes
-- Concurrency: Apps Script uses `LockService` to prevent double-booking.
-- Privacy: reservation names and messages are only returned to the admin page.
+- Concurrency: Apps Script uses `LockService` to prevent double-booking and lost contributions.
+- Privacy: reservation names and messages are only returned to the admin page. Contribution names and notes are stored only in the private `Contributions` sheet.
 - Guest cancellation: anyone with the page can release a reserved gift by clicking "Cancel reservation" and confirming. This is intentional — there are no accounts, tokens, or identity checks. Every cancellation is logged in the `Reservations` sheet.
+- Cash contributions: any guest can record an amount for a fund. Contributions increment `raised` immediately and cannot be undone from the site. Every contribution is logged in the `Contributions` sheet.
 - Demo mode is per-browser only. Configure the Apps Script endpoint for shared reservations.
 
 ## Ideas to consider (future)

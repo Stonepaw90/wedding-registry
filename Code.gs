@@ -1,11 +1,12 @@
 // Google Apps Script backend for the wedding registry.
 // Deploy: Extensions > Apps Script in your Google Sheet, paste this, then Deploy > Web app
 //   Execute as: Me, Who has access: Anyone.
-// Sheets required: "Gifts", "Funds", "Reservations" (auto-created).
+// Sheets required: "Gifts", "Funds", "Reservations", "Contributions" (auto-created).
 
 const SHEET_GIFTS = 'Gifts';
 const SHEET_FUNDS = 'Funds';
 const SHEET_RES = 'Reservations';
+const SHEET_CONTRIB = 'Contributions';
 const ADMIN_TOKEN = ''; // optional fallback; prefer Script Properties 'ADMIN_TOKEN'
 
 const GIFT_COLUMNS = [
@@ -13,6 +14,8 @@ const GIFT_COLUMNS = [
   'quantity', 'claimed', 'reservedBy', 'reservedAt', 'message', 'priority',
   'active', 'note'
 ];
+
+const FUND_COLUMNS = ['id', 'name', 'description', 'goal', 'raised', 'link', 'qrImage'];
 
 function getToken_() {
   return PropertiesService.getScriptProperties().getProperty('ADMIN_TOKEN') || ADMIN_TOKEN;
@@ -33,15 +36,20 @@ function ensureSheets_() {
   }
   if (!ss.getSheetByName(SHEET_FUNDS)) {
     const sh = ss.insertSheet(SHEET_FUNDS);
-    sh.appendRow(['id','name','description','goal','raised','link','qrImage']);
+    sh.appendRow(FUND_COLUMNS);
   }
   if (!ss.getSheetByName(SHEET_RES)) {
     const sh = ss.insertSheet(SHEET_RES);
     sh.appendRow(['timestamp','giftId','name','message','status']);
   }
+  if (!ss.getSheetByName(SHEET_CONTRIB)) {
+    const sh = ss.insertSheet(SHEET_CONTRIB);
+    sh.appendRow(['timestamp','fundId','fundName','name','amount','note']);
+  }
   // Older sheets may predate a column. Add any missing ones at the end so
   // reservations and notes keep working without a manual re-import.
   ensureColumns_(ss.getSheetByName(SHEET_GIFTS), GIFT_COLUMNS);
+  ensureColumns_(ss.getSheetByName(SHEET_FUNDS), FUND_COLUMNS);
 }
 
 function ensureColumns_(sh, required) {
@@ -91,6 +99,7 @@ function doPost(e) {
   try {
     if (action === 'reserve') return handleReserve_(body);
     if (action === 'cancel') return handleCancel_(body);
+    if (action === 'contribute') return handleContribute_(body);
     if (action === 'adminList') return handleAdminList_(body);
     if (action === 'add') return handleAdd_(body);
     if (action === 'update') return handleUpdate_(body);
@@ -175,6 +184,33 @@ function handleCancel_(body) {
   const log = ss_().getSheetByName(SHEET_RES);
   log.appendRow([new Date().toISOString(), id, name, '', 'cancelled']);
   return json_({ ok: true });
+}
+
+// Guests record what they are sending (or have sent) to a cash fund. This
+// immediately increases the fund's "raised" total. There is intentionally no
+// undo action; corrections can be made directly in the Funds sheet.
+function handleContribute_(body) {
+  const fundId = body.fundId;
+  const amount = Math.round(Number(body.amount) * 100) / 100;
+  const name = String(body.name || '').trim().slice(0, 80);
+  const note = String(body.note || '').trim().slice(0, 200);
+  if (!fundId) return json_({ ok: false, error: 'Missing fund id' });
+  if (!Number.isFinite(amount) || amount <= 0) return json_({ ok: false, error: 'Enter an amount greater than zero.' });
+  if (amount > 1000000) return json_({ ok: false, error: 'That amount is too large.' });
+
+  const sh = ss_().getSheetByName(SHEET_FUNDS);
+  const headers = sh.getRange(1,1,1,sh.getLastColumn()).getValues()[0];
+  const row = findRow_(sh, fundId);
+  if (row < 0) return json_({ ok: false, error: 'Fund not found' });
+  const idx = (h) => headers.indexOf(h) + 1;
+  const fundName = String(sh.getRange(row, idx('name')).getValue() || '');
+  const raised = Number(sh.getRange(row, idx('raised')).getValue()) || 0;
+  const next = Math.round((raised + amount) * 100) / 100;
+  sh.getRange(row, idx('raised')).setValue(next);
+
+  const log = ss_().getSheetByName(SHEET_CONTRIB);
+  log.appendRow([new Date().toISOString(), fundId, fundName, name, amount, note]);
+  return json_({ ok: true, raised: next, amount });
 }
 
 function handleAdd_(body) {

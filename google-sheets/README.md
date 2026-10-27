@@ -7,6 +7,7 @@ These CSVs are a starting point for the production Google Sheets backend.
    - `gifts.csv` → sheet named **Gifts**
    - `funds.csv` → sheet named **Funds**
    - `reservations.csv` → sheet named **Reservations**
+   - `contributions.csv` → sheet named **Contributions**
 3. In Google Sheets: **File → Import → Upload**, choose the CSV, then **Insert new sheet(s)**.
    Rename the imported tabs exactly as above.
 4. Open **Extensions → Apps Script**, paste `Code.gs`, and set `ADMIN_TOKEN` under
@@ -22,9 +23,16 @@ relative to the GitHub Pages site. If you prefer absolute URLs, replace them wit
 Add your real cash funds to the **Funds** sheet. `funds.csv` contains headers only
 so the demo placeholder funds are not published by accident.
 
+The **Contributions** sheet is optional to create by hand: the deployed Apps Script
+creates it automatically with the headers `timestamp fundId fundName name amount note`.
+When a guest records cash, the matching fund's `raised` value increases and a row is
+appended here. Correct a contribution by editing `raised` in **Funds** (and the
+matching **Contributions** row if you want the log to match). There is no undo button
+on the site.
+
 The first time the deployed Apps Script handles a request, it adds any missing
-columns to the **Gifts** header row (for example `note`). You do not need to add
-them manually.
+columns to the **Gifts** and **Funds** header rows (for example `note`). You do not
+need to add them manually.
 
 ## Updating product links
 

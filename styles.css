@@ -133,8 +133,14 @@ a { color: var(--accent-dark); }
 .progress { height: 8px; background: #eee6d9; border-radius: 999px; overflow: hidden; margin: .6rem 0; }
 .progress-bar { height: 100%; background: var(--accent); transition: width .4s ease; }
 .fund-amounts { display: flex; justify-content: space-between; font-size: .85rem; color: var(--muted); }
+.fund-head { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem; }
+.fund-pct { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; color: var(--accent-dark); line-height: 1; }
+.fund-remaining { font-size: .8rem; color: var(--muted); margin-top: .2rem; }
+.fund-actions { display: flex; gap: .5rem; margin-top: .9rem; }
+.fund-actions .btn { flex: 1; padding: .55rem .8rem; font-size: .9rem; }
+#cash .funds { margin-bottom: 0; }
 
-.cash-methods { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+.cash-methods { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 2rem; }
 .methods { list-style: none; padding: 0; margin: 0 0 1rem; }
 .methods li { padding: .4rem 0; border-bottom: 1px dashed var(--border); }
 .methods li:last-child { border-bottom: none; }
@@ -168,6 +174,19 @@ a { color: var(--accent-dark); }
 }
 .check-line { display: flex; align-items: flex-start; gap: .55rem; font-size: .88rem; }
 .modal-card .check-line input { width: auto; flex: none; margin: .25rem 0 0; }
+.amount-field {
+  display: flex; align-items: center; margin-top: .35rem; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 8px;
+}
+.amount-field:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(176,138,90,.15); }
+.amount-field > span { padding-left: .8rem; color: var(--muted); }
+.modal-card .amount-field input { border: none; margin: 0; padding: .6rem .8rem .6rem .35rem; background: transparent; }
+.modal-card .amount-field input:focus { outline: none; }
+.fund-disclaimer {
+  background: #fdf8ec; border: 1px solid #eadfc9; border-radius: 8px;
+  padding: .55rem .65rem; font-size: .8rem; color: var(--muted);
+}
+.fund-send { background: #f3eee5; border-radius: 8px; padding: .55rem .65rem; font-size: .82rem; }
 .form-status { font-size: .85rem; margin-top: .6rem; min-height: 1.2rem; }
 .form-status.error { color: var(--danger); }
 .form-status.success { color: var(--success); }
