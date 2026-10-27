@@ -117,6 +117,5 @@ The public `list` endpoint strips `reservedBy`, `reservedAt`, and `message`, so 
 - RSVP form
 - Photo gallery
 - Thank-you tracker
-- Multiple registries (Amazon/Target links) section
 - Gift quantity > 1 (already supported)
 - Email notifications via Apps Script `MailApp` (free quota)
